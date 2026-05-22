@@ -915,3 +915,464 @@ body {
   background: var(--bg-card);
   display: block;
 }
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Navigation Menu */
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 1024px;
+  background: rgba(8, 9, 12, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  z-index: 999;
+  flex-direction: column;
+  padding: 16px;
+  gap: 8px;
+}
+
+.nav-tab-mobile {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: block;
+  text-align: left;
+}
+
+.nav-tab-mobile:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-tab-mobile.active {
+  background: var(--accent-emerald-dark);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+/* Leaderboard Mobile Card View */
+.leaderboard-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.leaderboard-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.leaderboard-card:active {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.leaderboard-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.leaderboard-card .card-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.leaderboard-card .card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  margin-bottom: 12px;
+}
+
+.leaderboard-card .card-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.leaderboard-card .card-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.leaderboard-card .card-stat-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.leaderboard-card .card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.leaderboard-desktop {
+  display: block;
+}
+
+/* Tablet Breakpoint (768px) */
+@media (max-width: 768px) {
+  /* Header adjustments */
+  .header-capsule {
+    width: calc(100% - 16px);
+    max-width: 100%;
+    padding: 0 12px;
+    height: 56px;
+    top: 12px;
+  }
+
+  .logo-text {
+    font-size: 14px;
+  }
+
+  .time-badge {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-desktop {
+    display: none !important;
+  }
+
+  body {
+    padding-top: 80px;
+  }
+
+  /* App container adjustments */
+  .app-container {
+    padding: 24px 16px;
+  }
+
+  /* Hero header */
+  .big-brand-title {
+    font-size: 48px;
+  }
+
+  /* Leaderboard responsive */
+  .leaderboard-desktop {
+    display: none;
+  }
+
+  .leaderboard-mobile {
+    display: flex;
+  }
+
+  /* Balancer grid */
+  .balancer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .balancer-boards {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Teams grid */
+  .teams-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Page title */
+  .page-title {
+    font-size: 24px;
+  }
+
+  /* Card adjustments */
+  .card {
+    padding: 16px;
+  }
+
+  /* Leaderboard filters */
+  div[style*="display: flex"][style*="gap: 16px"][style*="marginBottom: 20px"] {
+    flex-direction: column;
+    gap: 12px !important;
+  }
+
+  /* Badge row */
+  .badge-row {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .dist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Timeline card */
+  .timeline-card {
+    max-height: 300px;
+  }
+}
+
+/* Mobile Breakpoint (480px) */
+@media (max-width: 480px) {
+  /* Header */
+  .header-capsule {
+    width: calc(100% - 12px);
+    max-width: 100%;
+    padding: 0 6px;
+    height: 52px;
+    top: 8px;
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .logo-text {
+    font-size: 13px;
+  }
+
+  .header-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  body {
+    padding-top: 70px;
+  }
+
+  /* App container */
+  .app-container {
+    padding: 16px 12px;
+  }
+
+  /* Hero section */
+  .event-badge-outline {
+    font-size: 11px;
+    padding: 4px 12px;
+  }
+
+  .big-brand-title {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .hero-subtitle-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  /* Page title */
+  .page-title {
+    font-size: 20px;
+  }
+
+  .page-subtitle {
+    font-size: 12px;
+  }
+
+  /* Stats card */
+  .card-value {
+    font-size: 40px;
+  }
+
+  .card-description {
+    font-size: 12px;
+  }
+
+  /* Numbered badges */
+  .circle-grid {
+    gap: 8px;
+  }
+
+  .numbered-badge-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  /* Leaderboard card */
+  .leaderboard-card {
+    padding: 12px;
+  }
+
+  .leaderboard-card .card-stats {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .leaderboard-card .card-stat-label {
+    font-size: 10px;
+  }
+
+  .leaderboard-card .card-stat-value {
+    font-size: 14px;
+  }
+
+  .leaderboard-card .card-footer {
+    font-size: 13px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Team card */
+  .team-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .team-name {
+    font-size: 16px;
+  }
+
+  .team-stats-row {
+    padding: 12px 6px;
+  }
+
+  .team-stat-value {
+    font-size: 14px;
+  }
+
+  .team-stat-label {
+    font-size: 10px;
+  }
+
+  /* Rank badge */
+  .rank-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+
+  /* Activity badge */
+  .activity-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  /* Dist grid */
+  .dist-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .dist-item {
+    padding: 6px 8px;
+  }
+
+  .dist-label {
+    font-size: 11px;
+  }
+
+  .dist-val {
+    font-size: 12px;
+  }
+
+  /* User avatar */
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .user-name {
+    font-size: 13px;
+  }
+
+  .user-team {
+    font-size: 10px;
+  }
+
+  /* Capsule toggle */
+  .toggle-option {
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+
+  /* Balancer buttons */
+  .balancer-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .balancer-user-tag {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+  }
+
+  /* Timeline */
+  .timeline-item {
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .timeline-title {
+    font-size: 13px;
+  }
+
+  .timeline-meta {
+    font-size: 11px;
+  }
+
+  /* Card grid */
+  .grid-card {
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  .card-meta {
+    font-size: 10px;
+  }
+
+  .card-value {
+    font-size: 36px;
+  }
+
+  .card-description {
+    font-size: 11px;
+  }
+}

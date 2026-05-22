@@ -141,7 +141,7 @@ export default function LeaderboardTable({
           </div>
 
           {/* Team Filter */}
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
             {["All", "Team Alpha", "Team Beta"].map((team) => (
               <button
                 key={team}
@@ -165,41 +165,42 @@ export default function LeaderboardTable({
         </div>
       )}
 
-      <div className="leaderboard-container" style={{ width: "100%", overflowX: "auto" }}>
-        <table className="leaderboard-table" style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+      {/* Desktop Table View */}
+      <div className="leaderboard-container leaderboard-desktop" style={{ width: "100%", overflowX: "auto" }}>
+        <table className="leaderboard-table" style={{ width: "100%", borderCollapse: "collapse", tableLayout: "auto" }}>
           <thead>
             <tr>
-              <th onClick={() => handleSort("rank")} style={{ cursor: "pointer", width: "80px", padding: "16px 12px" }}>
+              <th onClick={() => handleSort("rank")} style={{ cursor: "pointer", padding: "16px 12px", minWidth: "80px" }}>
                 <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   Rank {getSortIcon("rank")}
                 </span>
               </th>
-              <th onClick={() => handleSort("username")} style={{ cursor: "pointer", minWidth: "160px", padding: "16px 12px" }}>
+              <th onClick={() => handleSort("username")} style={{ cursor: "pointer", padding: "16px 12px", minWidth: "160px" }}>
                 <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   Contributor {getSortIcon("username")}
                 </span>
               </th>
-              <th onClick={() => handleSort("prsMerged")} style={{ cursor: "pointer", width: "110px", textAlign: "center", padding: "16px 12px" }}>
+              <th onClick={() => handleSort("prsMerged")} style={{ cursor: "pointer", padding: "16px 12px", minWidth: "110px", textAlign: "center" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
                   Merged PRs {getSortIcon("prsMerged")}
                 </span>
               </th>
-              <th onClick={() => handleSort("prsReviewed")} style={{ cursor: "pointer", width: "90px", textAlign: "center", padding: "16px 12px" }}>
+              <th onClick={() => handleSort("prsReviewed")} style={{ cursor: "pointer", padding: "16px 12px", minWidth: "90px", textAlign: "center" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
                   Reviews {getSortIcon("prsReviewed")}
                 </span>
               </th>
-              <th onClick={() => handleSort("issuesClosed")} style={{ cursor: "pointer", width: "110px", textAlign: "center", padding: "16px 12px" }}>
+              <th onClick={() => handleSort("issuesClosed")} style={{ cursor: "pointer", padding: "16px 12px", minWidth: "110px", textAlign: "center" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
                   Issues Fixed {getSortIcon("issuesClosed")}
                 </span>
               </th>
-              <th onClick={() => handleSort("score")} style={{ cursor: "pointer", width: "90px", textAlign: "right", padding: "16px 12px" }}>
+              <th onClick={() => handleSort("score")} style={{ cursor: "pointer", padding: "16px 12px", minWidth: "90px", textAlign: "right" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "6px" }}>
                   Score {getSortIcon("score")}
                 </span>
               </th>
-              <th style={{ width: "110px", textAlign: "right", padding: "16px 12px" }}>Activity</th>
+              <th style={{ padding: "16px 12px", minWidth: "110px", textAlign: "right" }}>Activity</th>
             </tr>
           </thead>
           <tbody>
@@ -260,6 +261,70 @@ export default function LeaderboardTable({
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="leaderboard-mobile">
+        {displayed.length > 0 ? (
+          displayed.map((c) => (
+            <Link href={`/contributors/${c.username}`} key={c.username} style={{ textDecoration: "none" }}>
+              <div className="leaderboard-card">
+                <div className="card-header">
+                  <div className="card-user-info">
+                    <span className={`rank-badge ${getRankBadgeClass(c.originalRank)}`}>
+                      {c.originalRank}
+                    </span>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, minWidth: 0 }}>
+                      <div className="user-name" style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.username}</div>
+                      <div className="user-team" style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.team}</div>
+                    </div>
+                  </div>
+                  <img 
+                    src={c.avatarUrl} 
+                    alt={c.username} 
+                    className="user-avatar"
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      border: "2px solid rgba(255, 255, 255, 0.1)",
+                      background: "rgba(255, 255, 255, 0.02)",
+                      flexShrink: 0
+                    }}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80`;
+                    }}
+                  />
+                </div>
+                <div className="card-stats">
+                  <div className="card-stat">
+                    <span className="card-stat-label">Merged PRs</span>
+                    <span className="card-stat-value">{c.prsMerged}</span>
+                  </div>
+                  <div className="card-stat">
+                    <span className="card-stat-label">Reviews</span>
+                    <span className="card-stat-value">{c.prsReviewed}</span>
+                  </div>
+                  <div className="card-stat">
+                    <span className="card-stat-label">Issues</span>
+                    <span className="card-stat-value">{c.issuesClosed}</span>
+                  </div>
+                </div>
+                <div className="card-footer">
+                  <span style={{ fontWeight: 700, color: "var(--accent-blue)", fontSize: "16px" }}>Score: {c.score}</span>
+                  <span className={`activity-badge ${getActivityBadgeClass(c.activityLevel)}`}>
+                    {c.activityLevel}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <div style={{ textAlign: "center", padding: "32px 16px", color: "var(--text-tertiary)" }}>
+            No contributors found matching the filters.
+          </div>
+        )}
       </div>
     </div>
   );
