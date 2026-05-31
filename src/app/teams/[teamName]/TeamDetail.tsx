@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useData } from "../../../context/DataContext";
+import { formatToIST } from "../../../lib/formatDate";
 import {
   PieChart,
   Pie,
@@ -404,7 +405,7 @@ export default function TeamDetail({ teamName }: { teamName: string }) {
                           </span>
                         </div>
                         <span style={{ fontSize: "11px", color: "var(--text-tertiary)" }}>
-                          {item.date}
+                          {formatToIST(item.date)}
                         </span>
                       </div>
 
