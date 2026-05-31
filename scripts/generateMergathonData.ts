@@ -316,12 +316,21 @@ query SearchMergedPRs($query: String!, $cursor: String) {
       ... on PullRequest {
         title
         url
+        createdAt
         closedAt
         mergedAt
         mergedBy { login avatarUrl }
         author { login avatarUrl }
         repository { nameWithOwner }
         labels(first: 100) { nodes { name } }
+        closingIssuesReferences(first: 10) {
+          nodes {
+            createdAt
+            number
+            title
+            url
+          }
+        }
       }
     }
   }
@@ -336,6 +345,7 @@ query SearchClosedIssues($query: String!, $cursor: String) {
       ... on Issue {
         title
         url
+        createdAt
         closedAt
         author { login avatarUrl }
         repository { nameWithOwner }
@@ -361,6 +371,7 @@ query SearchClosedPRs($query: String!, $cursor: String) {
       ... on PullRequest {
         title
         url
+        createdAt
         closedAt
         author { login avatarUrl }
         repository { nameWithOwner }
@@ -370,6 +381,14 @@ query SearchClosedPRs($query: String!, $cursor: String) {
             ... on ClosedEvent {
               actor { login avatarUrl }
             }
+          }
+        }
+        closingIssuesReferences(first: 10) {
+          nodes {
+            createdAt
+            number
+            title
+            url
           }
         }
       }
@@ -384,25 +403,36 @@ interface GQLActor { login: string; avatarUrl: string; }
 interface GQLLabel { name: string; }
 interface GQLRepository { nameWithOwner: string; }
 
+interface GQLLinkedIssue {
+  createdAt: string;
+  number: number;
+  title: string;
+  url: string;
+}
+
 interface GQLMergedPR {
   title: string;
   url: string;
+  createdAt: string;
   closedAt: string;
   mergedAt: string;
   mergedBy: GQLActor | null;
   author: GQLActor | null;
   repository: GQLRepository;
   labels: { nodes: GQLLabel[] };
+  closingIssuesReferences?: { nodes: GQLLinkedIssue[] };
 }
 
 interface GQLClosedItem {
   title: string;
   url: string;
+  createdAt: string;
   closedAt: string;
   author: GQLActor | null;
   repository: GQLRepository;
   labels: { nodes: GQLLabel[] };
   timelineItems: { nodes: Array<{ actor: GQLActor | null }> };
+  closingIssuesReferences?: { nodes: GQLLinkedIssue[] };
 }
 
 interface GQLSearchResult<T> {
@@ -411,6 +441,19 @@ interface GQLSearchResult<T> {
     issueCount: number;
     nodes: T[];
   };
+}
+
+function fixesOldBug(pr: { title: string; url: string; closingIssuesReferences?: { nodes: GQLLinkedIssue[] } }, startDate: string): boolean {
+  if (!pr.closingIssuesReferences?.nodes || pr.closingIssuesReferences.nodes.length === 0) return false;
+  let hasOldBug = false;
+  for (const issue of pr.closingIssuesReferences.nodes) {
+    const issueCreatedDate = issue.createdAt.split("T")[0];
+    if (issueCreatedDate < startDate) {
+      console.log(`      🐞 PR "${pr.title}" [${pr.url}] resolves issue #${issue.number} ("${issue.title}") created on ${issueCreatedDate} (< event start ${startDate}).`);
+      hasOldBug = true;
+    }
+  }
+  return hasOldBug;
 }
 
 // --------------- Live GitHub Aggregator (GraphQL) ---------------
@@ -476,6 +519,17 @@ async function fetchLiveContributors(config: YamlConfig, pool: TokenPool): Promi
       const repo = pr.repository.nameWithOwner;
       if (!reposSet.has(repo.toLowerCase())) continue;
       if (!hasScoringLabel(pr.labels.nodes, config.mergedLabels)) continue;
+      
+      const prCreatedDate = pr.createdAt.split("T")[0];
+      const isOldBugFix = fixesOldBug(pr, startDate);
+      const isTeamMember = memberTeamMap.has(pr.author.login.toLowerCase());
+      if (prCreatedDate >= startDate) {
+        if (!isOldBugFix || !isTeamMember) {
+          console.log(`   ⏭️  Skipping merged PR (created ${prCreatedDate} >= event start ${startDate}): ${pr.title} [${pr.url}] - resolves old bug: ${isOldBugFix}, team member: ${isTeamMember}`);
+          continue;
+        }
+      }
+      
       if (processedPrsMerged.has(pr.url)) continue;
       if (pr.author.login.endsWith("[bot]")) continue;
       processedPrsMerged.add(pr.url);
@@ -526,6 +580,13 @@ async function fetchLiveContributors(config: YamlConfig, pool: TokenPool): Promi
       const repo = issue.repository.nameWithOwner;
       if (!reposSet.has(repo.toLowerCase())) continue;
       if (!hasScoringLabel(issue.labels.nodes, config.closedLabels)) continue;
+      
+      const issueCreatedDate = issue.createdAt.split("T")[0];
+      if (issueCreatedDate >= startDate) {
+        console.log(`   ⏭️  Skipping closed issue (created ${issueCreatedDate} >= event start ${startDate}): ${issue.title} [${issue.url}]`);
+        continue;
+      }
+      
       if (processedIssuesClosed.has(issue.url)) continue;
       processedIssuesClosed.add(issue.url);
 
@@ -533,11 +594,12 @@ async function fetchLiveContributors(config: YamlConfig, pool: TokenPool): Promi
       let closer: GQLActor | null = null;
       if (issue.timelineItems.nodes.length > 0 && issue.timelineItems.nodes[0]?.actor) {
         closer = issue.timelineItems.nodes[0].actor;
-      } else if (issue.author) {
-        closer = issue.author;
       }
 
-      if (!closer) continue;
+      if (!closer) {
+        console.log(`   ⚠️  Skipping closed issue (no closer actor found): ${issue.title} [${issue.url}]`);
+        continue;
+      }
       if (closer.login.endsWith("[bot]")) continue;
 
       const contributor = getOrCreateContributor(closer.login, closer.avatarUrl);
@@ -574,6 +636,17 @@ async function fetchLiveContributors(config: YamlConfig, pool: TokenPool): Promi
       const repo = pr.repository.nameWithOwner;
       if (!reposSet.has(repo.toLowerCase())) continue;
       if (!hasScoringLabel(pr.labels.nodes, config.closedLabels)) continue;
+      
+      const prCreatedDate = pr.createdAt.split("T")[0];
+      const isOldBugFix = fixesOldBug(pr, startDate);
+      const isTeamMember = pr.author ? memberTeamMap.has(pr.author.login.toLowerCase()) : false;
+      if (prCreatedDate >= startDate) {
+        if (!isOldBugFix || !isTeamMember) {
+          console.log(`   ⏭️  Skipping closed PR (created ${prCreatedDate} >= event start ${startDate}): ${pr.title} [${pr.url}] - resolves old bug: ${isOldBugFix}, team member: ${isTeamMember}`);
+          continue;
+        }
+      }
+      
       if (processedClosedPRs.has(pr.url)) continue;
       processedClosedPRs.add(pr.url);
 
@@ -581,16 +654,16 @@ async function fetchLiveContributors(config: YamlConfig, pool: TokenPool): Promi
       let closer: GQLActor | null = null;
       if (pr.timelineItems.nodes.length > 0 && pr.timelineItems.nodes[0]?.actor) {
         closer = pr.timelineItems.nodes[0].actor;
-      } else if (pr.author) {
-        closer = pr.author;
       }
 
-      if (!closer) continue;
+      if (!closer) {
+        console.log(`   ⚠️  Skipping closed PR (no closer actor found): ${pr.title} [${pr.url}]`);
+        continue;
+      }
       if (closer.login.endsWith("[bot]")) continue;
 
       const closerKey = closer.login.toLowerCase();
       if (!memberTeamMap.has(closerKey)) {
-        // Skip unmerged PRs not closed by actual Mergathon participants
         continue;
       }
 
