@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-05-31T00:01:58.736Z",
+  "lastUpdated": "2026-05-31T05:18:54.566Z",
   "eventStartDate": "2026-05-22",
   "eventEndDate": "2026-05-31",
   "stats": {
     "totalContributors": 15,
     "totalPrsMerged": 57,
     "totalPrsOpened": 0,
-    "totalIssuesClosed": 805,
+    "totalIssuesClosed": 807,
     "totalIssuesOpened": 0,
     "daysElapsed": 10,
     "daysRemaining": 0
@@ -36,10 +36,10 @@
         "aryanndwi123",
         "Harkeerat24"
       ],
-      "totalScore": 242,
+      "totalScore": 244,
       "totalPrsMerged": 27,
       "totalPrsOpened": 0,
-      "totalIssuesClosed": 161,
+      "totalIssuesClosed": 163,
       "totalIssuesOpened": 0
     },
     {
@@ -5709,10 +5709,10 @@
       "prsOpened": 0,
       "prsMerged": 2,
       "issuesOpened": 0,
-      "issuesClosed": 57,
-      "issuesPrClosedScore": 57,
+      "issuesClosed": 58,
+      "issuesPrClosedScore": 58,
       "prsMergedScore": 6,
-      "score": 63,
+      "score": 64,
       "activityLevel": "High",
       "dailyActivity": [
         {
@@ -5744,8 +5744,8 @@
           "prsOpened": 0,
           "prsMerged": 2,
           "issuesOpened": 0,
-          "issuesClosed": 1,
-          "score": 7
+          "issuesClosed": 2,
+          "score": 8
         },
         {
           "date": "2026-05-26",
@@ -6263,6 +6263,14 @@
         },
         {
           "type": "issue_closed",
+          "title": "feat: Client-side Verilog synthesis via Yosys WASM for Tauri desktop builds",
+          "url": "https://github.com/CircuitVerse/cv-frontend-vue/issues/1021",
+          "repo": "CircuitVerse/cv-frontend-vue",
+          "date": "2026-05-25",
+          "points": 1
+        },
+        {
+          "type": "issue_closed",
           "title": "Update copyright year from 2025 to 2026 on About page",
           "url": "https://github.com/CircuitVerse/Interactive-Book/issues/754",
           "repo": "CircuitVerse/Interactive-Book",
@@ -6279,10 +6287,10 @@
       "prsOpened": 0,
       "prsMerged": 4,
       "issuesOpened": 0,
-      "issuesClosed": 39,
-      "issuesPrClosedScore": 39,
+      "issuesClosed": 40,
+      "issuesPrClosedScore": 40,
       "prsMergedScore": 12,
-      "score": 51,
+      "score": 52,
       "activityLevel": "High",
       "dailyActivity": [
         {
@@ -6346,8 +6354,8 @@
           "prsOpened": 0,
           "prsMerged": 1,
           "issuesOpened": 0,
-          "issuesClosed": 1,
-          "score": 4
+          "issuesClosed": 2,
+          "score": 5
         },
         {
           "date": "2026-05-30",
@@ -6419,6 +6427,14 @@
           "type": "issue_closed",
           "title": "UI Fix: UI inconsistency occurring because of default VUE icon",
           "url": "https://github.com/CircuitVerse/cv-frontend-vue/issues/878",
+          "repo": "CircuitVerse/cv-frontend-vue",
+          "date": "2026-05-29",
+          "points": 1
+        },
+        {
+          "type": "issue_closed",
+          "title": "style: spacing fixed for import project box",
+          "url": "https://github.com/CircuitVerse/cv-frontend-vue/pull/879",
           "repo": "CircuitVerse/cv-frontend-vue",
           "date": "2026-05-29",
           "points": 1
@@ -8514,8 +8530,8 @@
       "prsOpened": 0,
       "prsMerged": 20,
       "issuesOpened": 0,
-      "issuesClosed": 180,
-      "score": 240
+      "issuesClosed": 181,
+      "score": 241
     },
     {
       "date": "2026-05-26",
@@ -8546,8 +8562,8 @@
       "prsOpened": 0,
       "prsMerged": 18,
       "issuesOpened": 0,
-      "issuesClosed": 33,
-      "score": 87
+      "issuesClosed": 34,
+      "score": 88
     },
     {
       "date": "2026-05-30",
