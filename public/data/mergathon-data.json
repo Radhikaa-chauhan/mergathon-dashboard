@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-31T14:45:41.506Z",
+  "lastUpdated": "2026-05-31T16:09:48.321Z",
   "eventStartDate": "2026-05-22",
   "eventEndDate": "2026-05-31",
   "stats": {
-    "totalContributors": 17,
+    "totalContributors": 16,
     "totalPrsMerged": 104,
     "totalPrsOpened": 0,
     "totalIssuesClosed": 996,
@@ -21,8 +21,8 @@
         "Asrani-Aman",
         "aryan7071"
       ],
-      "totalScore": 365,
-      "totalPrsMerged": 23,
+      "totalScore": 368,
+      "totalPrsMerged": 24,
       "totalPrsOpened": 0,
       "totalIssuesClosed": 296,
       "totalIssuesOpened": 0
@@ -51,8 +51,8 @@
         "Radhikaa-chauhan",
         "SouparnaChatterjee"
       ],
-      "totalScore": 364,
-      "totalPrsMerged": 27,
+      "totalScore": 361,
+      "totalPrsMerged": 26,
       "totalPrsOpened": 0,
       "totalIssuesClosed": 283,
       "totalIssuesOpened": 0
@@ -8597,14 +8597,6 @@
       "contributions": [
         {
           "type": "pr_merged",
-          "title": "Merged: Fix: Sticky main header for persistent access while scrolling",
-          "url": "https://github.com/CircuitVerse/Interactive-Book/pull/787",
-          "repo": "CircuitVerse/Interactive-Book",
-          "date": "2026-05-31",
-          "points": 3
-        },
-        {
-          "type": "pr_merged",
           "title": "Merged: Dependabot fix",
           "url": "https://github.com/CircuitVerse/CircuitVerse/pull/7432",
           "repo": "CircuitVerse/CircuitVerse",
@@ -8624,6 +8616,14 @@
           "title": "Merged: fix(flip-flops): resolve inconsistent latch vs flip-flop concepts",
           "url": "https://github.com/CircuitVerse/Interactive-Book/pull/777",
           "repo": "CircuitVerse/Interactive-Book",
+          "date": "2026-05-31",
+          "points": 3
+        },
+        {
+          "type": "pr_merged",
+          "title": "Merged: Feat: Add Forum related resources to Avo Dashboard",
+          "url": "https://github.com/CircuitVerse/CircuitVerse/pull/7082",
+          "repo": "CircuitVerse/CircuitVerse",
           "date": "2026-05-31",
           "points": 3
         },
@@ -9615,12 +9615,12 @@
       "profileUrl": "https://github.com/ShinichiShi",
       "team": "NasaVerse",
       "prsOpened": 0,
-      "prsMerged": 2,
+      "prsMerged": 3,
       "issuesOpened": 0,
       "issuesClosed": 19,
       "issuesPrClosedScore": 19,
-      "prsMergedScore": 6,
-      "score": 25,
+      "prsMergedScore": 9,
+      "score": 28,
       "activityLevel": "High",
       "dailyActivity": [
         {
@@ -9698,10 +9698,10 @@
         {
           "date": "2026-05-31",
           "prsOpened": 0,
-          "prsMerged": 1,
+          "prsMerged": 2,
           "issuesOpened": 0,
           "issuesClosed": 1,
-          "score": 4
+          "score": 7
         }
       ],
       "contributions": [
@@ -9710,6 +9710,14 @@
           "title": "docs: fix the bold wordings",
           "url": "https://github.com/CircuitVerse/CircuitVerseDocs/pull/529",
           "repo": "CircuitVerse/CircuitVerseDocs",
+          "date": "2026-05-31",
+          "points": 3
+        },
+        {
+          "type": "pr_merged",
+          "title": "Feat: Add Forum related resources to Avo Dashboard",
+          "url": "https://github.com/CircuitVerse/CircuitVerse/pull/7082",
+          "repo": "CircuitVerse/CircuitVerse",
           "date": "2026-05-31",
           "points": 3
         },
@@ -10262,112 +10270,6 @@
           "repo": "CircuitVerse/CircuitVerse",
           "date": "2026-05-26",
           "points": 1
-        }
-      ]
-    },
-    {
-      "username": "SouparnaChatterjee",
-      "avatarUrl": "https://avatars.githubusercontent.com/u/115988950?u=7dfd8bc4d74ccf6e6959dcffc2e06f5702a1e9c3&v=4",
-      "profileUrl": "https://github.com/SouparnaChatterjee",
-      "team": "LGTM",
-      "prsOpened": 0,
-      "prsMerged": 1,
-      "issuesOpened": 0,
-      "issuesClosed": 0,
-      "issuesPrClosedScore": 0,
-      "prsMergedScore": 3,
-      "score": 3,
-      "activityLevel": "Medium",
-      "dailyActivity": [
-        {
-          "date": "2026-05-22",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-23",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-24",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-25",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-26",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-27",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-28",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-29",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-30",
-          "prsOpened": 0,
-          "prsMerged": 0,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 0
-        },
-        {
-          "date": "2026-05-31",
-          "prsOpened": 0,
-          "prsMerged": 1,
-          "issuesOpened": 0,
-          "issuesClosed": 0,
-          "score": 3
-        }
-      ],
-      "contributions": [
-        {
-          "type": "pr_merged",
-          "title": "Fix: Sticky main header for persistent access while scrolling",
-          "url": "https://github.com/CircuitVerse/Interactive-Book/pull/787",
-          "repo": "CircuitVerse/Interactive-Book",
-          "date": "2026-05-31",
-          "points": 3
         }
       ]
     },
