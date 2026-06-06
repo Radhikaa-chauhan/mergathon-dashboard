@@ -1,81 +1,125 @@
-# ⚡ CircuitVerse Mergathon Leaderboard & Dashboard
+# ⚡ CircuitVerse Mergathon Dashboard
 
-Welcome to the **CircuitVerse Mergathon Dashboard** repository! This is a high-premium, real-time analytics dashboard built to track contributor activity, merged pull requests, closed issues, reviews, and team standings during the CircuitVerse open-source mergathon hackathons.
+A premium real-time analytics dashboard designed to track contributor activity and foster healthy competition during the CircuitVerse Mergathon event. This dashboard provides live insights into merged pull requests, closed issues, code reviews, and team leaderboards with an elegant glassmorphic design.
 
-Designed with modern glassmorphic aesthetics, glowing gradients, responsive charts, and an automated data-fetching pipeline, this dashboard is built to drive engagement, foster healthy competition, and provide event organizers with powerful administration tools.
+## 🎯 Project Overview
+
+The Mergathon Dashboard is a full-stack Next.js application that aggregates GitHub data and presents it through an interactive, real-time interface. It automatically tracks contributor metrics across the CircuitVerse ecosystem and displays them in an engaging leaderboard and analytics dashboard.
+
+**Key Use Cases:**
+- 📊 Real-time leaderboard tracking for event participants
+- 📈 Comprehensive analytics on team and individual contributor performance
+- 🎮 Gamified competition with score calculations and rankings
+- 🔄 Automated GitHub data aggregation with scheduled workflows
+- 👥 Smart team balancing and management tools for organizers
 
 ---
 
-## 🎨 Key Features
+## ✨ Key Features
 
-* **Overview KPI Cards**: At-a-glance stats including total activities, active contributors, and code activity distributions.
-* **Interactive Recharts Visuals**: 
-  * Wavy glowing activity sparklines showing real-time trends.
-  * Interactive Recharts Donut charts showing distribution of PRs vs Issues vs Reviews.
-  * Side-by-side historical trend lines and team score comparisons on the Analytics page.
-* **Overlapping Avatar Stack**: Visually stunning, animated stacked developer profiles fetched dynamically.
-* **Responsive Leaderboard Table**: Clean table layout with strict column widths, sorting, and user rank badges (Gold, Silver, Bronze).
-* **Smart Team Builder & Auto-Balancer**: 
-  * Located at `/admin`.
-  * Features a **Snake-Draft Auto-Balancer** algorithm that automatically groups registered contributors by score to balance out average points.
-  * Outputs live, formatted YAML configurations for quick deployment.
-* **Cron-Driven GitHub Aggregator**: Completely automated GitHub Action workflow that pulls live PRs, Issues, and Reviews on a schedule, updating scores without needing a full website rebuild.
+### 📊 Dashboard Overview
+- **KPI Cards**: Display key metrics at a glance including total activities, active contributors, and code activity breakdowns
+- **Real-time Updates**: Automatic data refresh showing current leaderboard standings and statistics
+
+### 📈 Interactive Visualizations
+- **Glowing Activity Sparklines**: Wavy, animated charts showing real-time activity trends
+- **Distribution Donut Charts**: Visual breakdown of PRs vs Issues vs Reviews across the event
+- **Historical Trend Analysis**: Side-by-side comparison charts on the Analytics page for tracking team performance over time
+
+### 👥 Team & Contributor Management
+- **Animated Avatar Stacks**: Dynamically fetched developer profiles displayed in visually stunning, overlapping stacks
+- **Responsive Leaderboard**: Clean, sortable table showing contributor rankings with medal badges (🥇 Gold, 🥈 Silver, 🥉 Bronze)
+- **Contributor Profiles**: Individual contributor pages showing detailed contribution breakdown
+
+### 🛠️ Admin & Configuration Tools
+- **Smart Team Builder** (`/admin`): Intuitive interface for registering participants and organizing teams
+- **Auto-Balancer Algorithm**: Snake-Draft algorithm that automatically groups contributors by score to create balanced teams
+- **Live YAML Configuration**: Export team configurations in ready-to-deploy YAML format
+
+### 🔄 Automated Data Pipeline
+- **Cron-Driven GitHub Aggregator**: GitHub Actions workflow that automatically pulls live PRs, Issues, and Reviews on a schedule
+- **No Manual Rebuilds Needed**: Dashboard updates autonomously without requiring website rebuilds
+- **Fallback Mock Data**: Development-friendly mock data system when GitHub tokens aren't available
 
 ---
 
 ## 🛠️ Technology Stack
 
-* **Framework**: Next.js 16 (App Router + Turbopack)
-* **Language**: TypeScript
-* **Styling**: Premium Vanilla CSS + Glassmorphism
-* **Icons**: Lucide React
-* **Charts**: Recharts
-* **Task Runner**: Node `tsx` for high-performance script execution
+| Layer | Technology |
+|-------|-----------|
+| **Frontend Framework** | Next.js 16 (App Router + Turbopack) |
+| **Language** | TypeScript (88.2% of codebase) |
+| **Styling** | Premium Vanilla CSS + Glassmorphism (11.6%) |
+| **UI Components** | Lucide React (icons), Recharts (data visualization) |
+| **Build Tools** | Node `tsx` for high-performance script execution |
+| **Deployment** | Static site export (Netlify, GitHub Pages, etc.) |
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these instructions to clone the repository and spin up the development environment locally.
+### Prerequisites
+Before you begin, ensure you have the following installed:
+- **Node.js**: v20.x or higher
+- **npm**: v10.x or higher (or alternative package managers: `yarn`, `pnpm`)
+- **Git**: For cloning the repository
 
-### 1. Prerequisites
-Ensure you have the following installed on your local machine:
-* **Node.js**: `v20.x` or higher
-* **npm**: `v10.x` or higher (or `yarn` / `pnpm`)
+### 1. Clone the Repository
 
-### 2. Clone the Repository
 ```bash
-git clone https://github.com/CircuitVerse/mergathon-dashboard.git
+git clone https://github.com/Radhikaa-chauhan/mergathon-dashboard.git
 cd mergathon-dashboard
 ```
 
-### 3. Install Dependencies
+### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
-### 4. Setup Local Development Configurations
-This project is configured with a robust fallback mechanism: **it does not require a GitHub Token to build or run locally!**
-If you wish to test live GitHub API aggregation, create a `.env.local` file in the root folder:
-```env
-GITHUB_TOKEN=your_personal_access_token_here
-```
-*(If no token is supplied, the database generator will gracefully fall back to generating highly realistic open-source mock contributions.)*
+### 3. Configure Environment (Optional)
 
-### 5. Running the Development Server
+This project works out-of-the-box without GitHub credentials! However, for live GitHub data aggregation:
+
+Create a `.env.local` file in the project root:
+```env
+# GitHub Personal Access Token (optional)
+# Create one at: https://github.com/settings/tokens
+GITHUB_TOKEN=ghp_your_personal_access_token_here
+```
+
+**Why it's optional:**
+- Without a token, the system generates highly realistic mock contribution data
+- Perfect for development, testing, and demonstrations
+- With a token, the dashboard fetches live GitHub activity
+
+### 4. Start Development Server
+
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) inside your web browser to view the dashboard live.
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser to see the dashboard in action.
 
 ---
 
-## ⚙️ Data Pipeline & Team Registration
+## 📊 Data Management
 
-The data display is managed by a single static file located at `/public/data/mergathon-data.json`. This is generated automatically by running the local ETL script.
+### Understanding the Data Pipeline
 
-### Registering Teams & Members
-To add teams or register participants, open [config.yaml](file:///c:/Projects/mergathon-circuitverse/config.yaml) in the root of the project:
+The dashboard reads contributor data from `/public/data/mergathon-data.json`, which is generated and updated through the data pipeline:
+
+```
+config.yaml → ETL Script → mergathon-data.json → Dashboard Display
+     ↑                           ↓
+  (Team Config)          (GitHub Actions)
+                         (Scheduled Updates)
+```
+
+### Registering Teams & Participants
+
+Edit the `config.yaml` file in the project root to register teams and participants:
+
 ```yaml
 event:
   name: "CircuitVerse Mergathon 2025"
@@ -86,54 +130,220 @@ teams:
   - name: "Team Alpha"
     color: "#3b82f6"
     members:
-      - "dev-sarah"
-      - "coder-alex"
+      - "github-username-1"
+      - "github-username-2"
+  
+  - name: "Team Beta"
+    color: "#ec4899"
+    members:
+      - "github-username-3"
+      - "github-username-4"
 ```
 
-### Manually Regenerating the Leaderboard
-To sync your local data file with the updated `config.yaml` or fetch the latest GitHub activity:
+### Regenerating the Leaderboard
+
+After updating `config.yaml` or when you want to fetch the latest GitHub activity:
+
 ```bash
 npm run generate:leaderboard
 ```
 
+This command:
+1. Reads team configurations from `config.yaml`
+2. Fetches live data from GitHub (if token is available)
+3. Calculates scores based on contribution metrics
+4. Generates the updated `mergathon-data.json` file
+5. Dashboard automatically reflects the new data on refresh
+
 ---
 
-## 🤝 How to Contribute
+## 🤝 Contributing
+
+We welcome contributions! Here's how to get started:
 
 ### 1. Find or Create an Issue
-* Browse our repository **Issues** tab to find tasks labeled `good-first-issue`, `bug`, or `feature-request`.
-* Leave a comment on the issue requesting to be assigned before you start writing code.
 
-### 2. Standard Branching Convention
-Create a descriptive feature branch from `main`:
+- Check the **Issues** tab for tasks labeled:
+  - `good-first-issue` - Great for newcomers
+  - `bug` - Issues to fix
+  - `feature-request` - New features to implement
+- Leave a comment requesting assignment before starting work
+
+### 2. Create a Feature Branch
+
+Use descriptive branch names following this convention:
+
 ```bash
-git checkout -b feature/your-awesome-feature
-# OR
-git checkout -b bugfix/fix-some-ui-alignment
+# For features
+git checkout -b feature/descriptive-feature-name
+
+# For bug fixes
+git checkout -b bugfix/short-description-of-fix
+
+# For documentation
+git checkout -b docs/update-readme
 ```
 
-### 3. Maintain Code Quality & Formatting
-* Keep styling rules inside `src/app/globals.css`. Ensure you use CSS variables inside `:root` to preserve the premium dark palette.
-* Do not introduce ad-hoc utility styling unless necessary; rely on the built-in design system tokens (`--border-primary`, `--bg-card`, etc.).
-* Run the Next.js linter before staging your commits:
+### 3. Code Quality Guidelines
+
+**Styling:**
+- Maintain all styles in `src/app/globals.css`
+- Use CSS custom properties (variables) from `:root` to maintain the premium dark theme
+- Follow the design system tokens: `--border-primary`, `--bg-card`, `--text-primary`, etc.
+- Avoid ad-hoc inline styles
+
+**Code Quality:**
+- Run the linter before committing:
   ```bash
   npm run lint
   ```
+- Write clear, descriptive commit messages
+- Keep components modular and reusable
 
-### 4. Create a Pull Request
-* Commit your modifications with clear, descriptive commit messages.
-* Push your branch to GitHub and open a **Pull Request (PR)** against the `main` branch.
-* In your PR description, explain:
-  1. What changes were introduced.
-  2. How you tested the changes (e.g. build verifies successfully, layout tests on mobile viewports).
-  3. Include a screenshot or screen recording if you made visual UI changes.
+### 4. Submit a Pull Request
+
+1. Commit your changes with descriptive messages:
+   ```bash
+   git add .
+   git commit -m "feat: add real-time score updates to leaderboard"
+   ```
+
+2. Push to your branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+3. Open a Pull Request against `main` with:
+   - Clear description of changes
+   - Explanation of testing (e.g., "Tested on mobile and desktop viewports")
+   - Screenshots or GIF for UI changes
+   - Reference to related issues
 
 ---
 
-## 📦 Production Builds & Deployment
+## 📦 Building for Production
 
-To compile the application into fully optimized production assets:
+### Create Production Build
+
 ```bash
 npm run build
 ```
-This project is configured with `output: 'export'`, meaning it generates a fully static pre-rendered site inside the `out/` folder. This folder can be dragged and dropped into Netlify, hosted on Vercel, or served via GitHub Pages for zero-cost, high-performance static hosting.
+
+### Output Structure
+
+The project uses `output: 'export'` configuration, generating a fully static site:
+- Build output: `out/` folder
+- All pages pre-rendered and optimized
+- No server-side rendering required
+- Ready for static hosting
+
+### Deployment Options
+
+Deploy the `out/` folder to:
+- **Netlify** - Drag & drop or use CLI
+- **GitHub Pages** - Automatic deployment via Actions
+- **Vercel** - Auto-deploy from git
+- **Any Static Host** - AWS S3, Cloudflare Pages, etc.
+
+---
+
+## 🔧 Available Scripts
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start development server at localhost:3000 |
+| `npm run build` | Create optimized production build |
+| `npm run lint` | Run code quality checks |
+| `npm run generate:leaderboard` | Regenerate contributor data and leaderboard |
+| `npm run start` | Start production server (after build) |
+
+---
+
+## 📁 Project Structure
+
+```
+mergathon-dashboard/
+├── src/
+│   ├── app/              # Next.js app directory
+│   │   ├── page.tsx      # Dashboard homepage
+│   │   ├── admin/        # Team builder & admin tools
+│   │   └── globals.css   # Global styles & design system
+│   ├── components/       # Reusable React components
+│   └── lib/              # Utility functions & helpers
+├── public/
+│   ├── data/
+│   │   └── mergathon-data.json  # Generated leaderboard data
+│   └── assets/           # Images, icons, etc.
+├── config.yaml           # Team & event configuration
+└── package.json          # Dependencies & scripts
+```
+
+---
+
+## 🎨 Design System
+
+The dashboard uses a premium glassmorphic design with carefully curated CSS variables. All customization should respect these design tokens:
+
+- **Colors**: Dark theme with accent colors (blue, pink, purple)
+- **Spacing**: Consistent padding and margins
+- **Typography**: Clean, readable font hierarchy
+- **Effects**: Subtle glows, gradients, and transparency effects
+
+Modify `src/app/globals.css` to customize the theme globally.
+
+---
+
+## 🐛 Troubleshooting
+
+### Issue: Dashboard shows mock data instead of real GitHub data
+**Solution:** 
+1. Ensure `GITHUB_TOKEN` is set in `.env.local`
+2. Run `npm run generate:leaderboard` to fetch live data
+3. Restart the development server
+
+### Issue: Build fails with TypeScript errors
+**Solution:**
+```bash
+# Clear cache and reinstall
+rm -rf node_modules .next
+npm install
+npm run build
+```
+
+### Issue: Changes not reflecting on localhost:3000
+**Solution:**
+1. Make sure development server is running (`npm run dev`)
+2. Hard refresh your browser (Ctrl+Shift+R or Cmd+Shift+R)
+3. Check browser console for errors
+
+---
+
+## 📞 Support & Questions
+
+- 📧 Reach out via GitHub Issues
+- 💬 Leave comments on relevant discussions
+- 🐛 Report bugs with detailed reproduction steps
+- 💡 Suggest features with clear use cases
+
+---
+
+## 📄 License
+
+This project is part of the CircuitVerse ecosystem. Please refer to the LICENSE file for details.
+
+---
+
+## ✅ Checklist for Contributors
+
+Before submitting your PR, verify:
+- [ ] Code follows the style guide and design system
+- [ ] All changes are tested locally (`npm run dev`)
+- [ ] Linter passes (`npm run lint`)
+- [ ] Commit messages are descriptive
+- [ ] PR description explains the changes
+- [ ] Screenshots included for UI changes
+- [ ] No breaking changes to existing features
+
+---
+
+**Happy contributing! 🚀**
