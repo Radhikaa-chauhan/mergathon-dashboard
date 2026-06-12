@@ -1,7 +1,5 @@
 #!/usr/bin/env ts-node
-// ============================================================
 // CircuitVerse Mergathon – Leaderboard Data Generator
-// ============================================================
 import * as fs from "fs";
 import * as path from "path";
 import type {
