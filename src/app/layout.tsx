@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { DataProvider } from "../context/DataContext";
 import DashboardLayout from "../components/DashboardLayout";
+import { getMergathonData } from "../lib/getMergathonData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,15 +20,17 @@ export const metadata: Metadata = {
   description: "Analytics and participation leaderboard tracking for the CircuitVerse Mergathon event.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialData = await getMergathonData();
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <DataProvider>
+        <DataProvider initialData={initialData}>
           <DashboardLayout>{children}</DashboardLayout>
         </DataProvider>
       </body>

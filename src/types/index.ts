@@ -57,6 +57,8 @@ export interface EventStats {
 
 export interface MergathonData {
   lastUpdated: string;
+  eventName: string;
+  organization: string;
   eventStartDate: string;
   eventEndDate: string;
   stats: EventStats;

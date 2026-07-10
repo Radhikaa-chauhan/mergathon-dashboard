@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { MergathonData } from "../types";
 
 interface DataContextType {
@@ -15,33 +15,10 @@ const DataContext = createContext<DataContextType>({
   error: null,
 });
 
-export function DataProvider({ children }: { children: React.ReactNode }) {
-  const [data, setData] = useState<MergathonData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        // Fetch static JSON file located in public directory
-        const response = await fetch("/data/mergathon-data.json", { cache: "no-store" });
-        if (!response.ok) {
-          throw new Error(`Failed to load data: ${response.statusText}`);
-        }
-        const json = await response.json();
-        setData(json);
-        setError(null);
-      } catch (err: any) {
-        console.error("Error loading dashboard data:", err);
-        setError(err.message || "Failed to load Mergathon data.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
+export function DataProvider({ children, initialData }: { children: React.ReactNode; initialData: MergathonData | null; }) {
+  const [data] = useState<MergathonData | null>(initialData);
+  const [loading] = useState(false);
+  const [error] = useState<string | null>(null);
 
   return (
     <DataContext.Provider value={{ data, loading, error }}>

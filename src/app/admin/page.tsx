@@ -208,13 +208,24 @@ function ValidationPanel({ validation }: { validation: ReturnType<typeof validat
 
 export default function AdminPage() {
   const { data } = useData();
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [accessCodeInput, setAccessCodeInput] = useState("");
+  const [accessError, setAccessError] = useState("");
   const [draftTeams, setDraftTeams] = useState<DraftTeam[]>([]);
   const [contributorsList, setContributorsList] = useState<DraftMember[]>([]);
   const [copied, setCopied] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
   const [newTeamColor, setNewTeamColor] = useState("#3b82f6");
+  const [newMemberUsername, setNewMemberUsername] = useState("");
+  const [newMemberTeam, setNewMemberTeam] = useState("");
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [dropdownErrors, setDropdownErrors] = useState<Record<string, string>>({});
+  const adminAccessCode = process.env.NEXT_PUBLIC_ADMIN_ACCESS_CODE || "circuitverse-admin";
+
+  useEffect(() => {
+    const unlocked = window.localStorage.getItem("mergathon-admin-unlocked") === "true";
+    setIsUnlocked(unlocked);
+  }, []);
 
   // Toast helpers — must be before early return to follow React Rules of Hooks
   const addToast = useCallback(
@@ -229,6 +240,19 @@ export default function AdminPage() {
   const dismissToast = useCallback((id: number) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
+
+  const handleUnlockAdmin = () => {
+    if (accessCodeInput.trim() === adminAccessCode) {
+      window.localStorage.setItem("mergathon-admin-unlocked", "true");
+      setIsUnlocked(true);
+      setAccessError("");
+      addToast("success", "Admin unlocked", "You can now edit the team draft.", 2500);
+      return;
+    }
+
+    setAccessError("Invalid admin access code.");
+    addToast("error", "Access denied", "The code you entered is not valid.", 3000);
+  };
 
   // Initialize draft states from context data
   useEffect(() => {
@@ -266,6 +290,44 @@ export default function AdminPage() {
   }, [data]);
 
   if (!data) return null;
+
+  const eventName = data.eventName || "CircuitVerse Mergathon";
+
+  if (!isUnlocked) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+        <div className="grid-card" style={{ width: "100%", maxWidth: "520px", textAlign: "left", padding: "28px" }}>
+          <div className="event-badge-outline" style={{ marginBottom: "18px" }}>
+            <ShieldAlert size={14} />
+            <span>Restricted Access</span>
+          </div>
+          <h1 style={{ fontSize: "32px", fontWeight: 900, color: "#ffffff", marginBottom: "10px" }}>Admin access required</h1>
+          <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "20px" }}>
+            This panel is only for organizers who maintain the {eventName} team draft.
+          </p>
+          <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-tertiary)", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            Access code
+          </label>
+          <input
+            type="password"
+            value={accessCodeInput}
+            onChange={(e) => setAccessCodeInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleUnlockAdmin();
+            }}
+            placeholder="Enter admin code"
+            style={{ width: "100%", padding: "12px 14px", borderRadius: "10px", border: `1px solid ${accessError ? "rgba(239,68,68,0.4)" : "var(--border-primary)"}`, background: "rgba(0,0,0,0.3)", color: "#ffffff", marginBottom: "10px" }}
+          />
+          {accessError && (
+            <div style={{ marginBottom: "12px", color: "#ef4444", fontSize: "12px", fontWeight: 600 }}>{accessError}</div>
+          )}
+          <button className="balancer-btn primary" onClick={handleUnlockAdmin} style={{ width: "100%" }}>
+            Unlock Admin Panel
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // 1. Calculations & Statistics for Balancer
   const getTeamStats = (teamName: string) => {
@@ -423,9 +485,49 @@ export default function AdminPage() {
   setNewTeamColor("#3b82f6");
 };
 
+  const handleAddMemberToTeam = () => {
+    const username = newMemberUsername.trim();
+    const teamName = newMemberTeam.trim();
+    if (!username || !teamName) return;
+
+    const targetTeam = draftTeams.find((t) => t.name === teamName);
+    if (!targetTeam) {
+      addToast("error", "Team not found", `Could not find ${teamName}.`, 3000);
+      return;
+    }
+
+    const existingMember = contributorsList.find((c) => c.username.toLowerCase() === username.toLowerCase());
+    const normalizedUsername = existingMember?.username || username;
+    const avatarUrl = existingMember?.avatarUrl || `https://avatars.githubusercontent.com/${normalizedUsername}`;
+
+    setContributorsList((prev) =>
+      existingMember
+        ? prev.map((member) =>
+            member.username.toLowerCase() === normalizedUsername.toLowerCase()
+              ? { ...member, avatarUrl }
+              : member
+          )
+        : [...prev, { username: normalizedUsername, avatarUrl, score: 0, prsMerged: 0, issuesClosed: 0 }]
+    );
+
+    setDraftTeams((prevTeams) =>
+      prevTeams.map((team) => {
+        const cleanedMembers = team.members.filter((member) => member.toLowerCase() !== normalizedUsername.toLowerCase());
+        if (team.name === teamName) {
+          return { ...team, members: [...cleanedMembers, normalizedUsername] };
+        }
+        return { ...team, members: cleanedMembers };
+      })
+    );
+
+    setNewMemberUsername("");
+    setNewMemberTeam(teamName);
+    addToast("success", "Member added", `${normalizedUsername} was assigned to ${teamName}.`, 3000);
+  };
+
   // 4. YAML config code generation
   const generateYamlCode = () => {
-    let yaml = `# Copy & paste this block into your config.yaml\nteams:\n`;
+    let yaml = `# Copy & paste this block into your config.yaml\nevent:\n  name: "${eventName}"\n  organization: "${data.organization || "CircuitVerse"}"\n  startDate: "${data.eventStartDate}"\n  endDate: "${data.eventEndDate}"\n\nteams:\n`;
     draftTeams.forEach((t) => {
       yaml += `  - name: "${t.name}"\n    color: "${t.color}"\n    members:\n`;
       t.members.forEach((m) => {
@@ -461,7 +563,7 @@ export default function AdminPage() {
         </h1>
         
         <p className="hero-subtitle-text" style={{ maxWidth: "700px", fontSize: "16px", marginBottom: "24px" }}>
-          Draft registered contributors into balanced hackathon squads using live average calculators or automated snake drafting.
+          Draft registered contributors into balanced hackathon squads, add new teammates, and export a reusable config for future mergathons.
         </p>
 
         <div className="badge-row" style={{ justifyContent: "flex-start", marginBottom: 0 }}>
@@ -634,52 +736,53 @@ export default function AdminPage() {
 
         {/* Right Side: Active Board Columns */}
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-        <div
-  className="grid-card"
-  style={{
-    display: "flex",
-    gap: "12px",
-    alignItems: "center",
-    flexWrap: "wrap",
-  }}
->
-  <input
-    type="text"
-    placeholder="Team name"
-    value={newTeamName}
-    onChange={(e) => setNewTeamName(e.target.value)}
-    style={{
-      padding: "10px 12px",
-      borderRadius: "8px",
-      border: "1px solid var(--border-primary)",
-      background: "rgba(0,0,0,0.3)",
-      color: "#ffffff",
-      fontSize: "13px",
-      outline: "none",
-      minWidth: "180px",
-    }}
-  />
+          <div className="grid-card" style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+            <input
+              type="text"
+              placeholder="Team name"
+              value={newTeamName}
+              onChange={(e) => setNewTeamName(e.target.value)}
+              style={{ padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-primary)", background: "rgba(0,0,0,0.3)", color: "#ffffff", fontSize: "13px", outline: "none", minWidth: "180px" }}
+            />
 
-  <input
-    type="color"
-    value={newTeamColor}
-    onChange={(e) => setNewTeamColor(e.target.value)}
-    style={{
-      width: "44px",
-      height: "44px",
-      border: "none",
-      background: "transparent",
-      cursor: "pointer",
-    }}
-  />
+            <input
+              type="color"
+              value={newTeamColor}
+              onChange={(e) => setNewTeamColor(e.target.value)}
+              style={{ width: "44px", height: "44px", border: "none", background: "transparent", cursor: "pointer" }}
+            />
 
-  <button
-    className="balancer-btn primary"
-    onClick={handleCreateTeam}
-  >
-    + Create Team
-  </button>
-</div>
+            <button className="balancer-btn primary" onClick={handleCreateTeam}>
+              + Create Team
+            </button>
+          </div>
+
+          <div className="grid-card" style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+            <input
+              type="text"
+              placeholder="New member username"
+              value={newMemberUsername}
+              onChange={(e) => setNewMemberUsername(e.target.value)}
+              style={{ padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-primary)", background: "rgba(0,0,0,0.3)", color: "#ffffff", fontSize: "13px", outline: "none", minWidth: "220px" }}
+            />
+
+            <select
+              value={newMemberTeam}
+              onChange={(e) => setNewMemberTeam(e.target.value)}
+              style={{ padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-primary)", background: "rgba(0,0,0,0.3)", color: "#ffffff", fontSize: "13px", outline: "none", minWidth: "180px" }}
+            >
+              <option value="">Select team</option>
+              {draftTeams.map((team) => (
+                <option key={team.name} value={team.name}>
+                  {team.name}
+                </option>
+              ))}
+            </select>
+
+            <button className="balancer-btn primary" onClick={handleAddMemberToTeam}>
+              + Add Member to Team
+            </button>
+          </div>
           <div className="balancer-boards">
             {draftTeams.map((team) => {
               const stats = getTeamStats(team.name);

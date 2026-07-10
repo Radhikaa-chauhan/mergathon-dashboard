@@ -946,6 +946,8 @@ async function main(): Promise<void> {
 
   const data: MergathonData = {
     lastUpdated: new Date().toISOString(),
+    eventName: config.eventName,
+    organization: config.organization,
     eventStartDate: config.eventStartDate, eventEndDate: config.eventEndDate,
     stats, teams, contributors: teamContributors.sort((a, b) => b.score - a.score), dailyTotals,
   };
