@@ -54,7 +54,7 @@ export default function DashboardInteractive() {
 
       {view === "overview" ? (
         <div>
-          <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px", marginBottom: "40px" }}>
+          <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "24px", marginBottom: "40px" }}>
             <div className="grid-card">
               <div className="card-title-row">
                 <span className="card-title" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -157,16 +157,16 @@ export default function DashboardInteractive() {
           <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: "32px" }} className="dashboard-columns">
             <section>
               <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--text-tertiary)", letterSpacing: "1px", textTransform: "uppercase" }}>Leaderboard</span>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", marginTop: "4px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", marginTop: "4px", flexWrap: "wrap", gap: "8px" }}>
                 <h3 style={{ fontSize: "28px", fontWeight: 900, color: "#ffffff", letterSpacing: "-0.5px" }}>Team Rankings</h3>
-                <span className="event-badge-outline" style={{ margin: 0, padding: "4px 12px", fontSize: "10px" }}>
+                <span className="event-badge-outline" style={{ margin: 0, padding: "4px 12px", fontSize: "10px", textAlign: "center" }}>
                   PR Merged +3pts · Issue/Unmerged PR Closed +1pt
                 </span>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {teams.map((team) => (
-                  <div key={team.name} style={{ background: "rgba(255, 255, 255, 0.01)", border: "1px solid var(--border-primary)", borderRadius: "var(--radius-lg)", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div key={team.name} className="leaderboard-team-row" style={{ background: "rgba(255, 255, 255, 0.01)", border: "1px solid var(--border-primary)", borderRadius: "var(--radius-lg)", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                       <div style={{ width: "48px", height: "48px", borderRadius: "var(--radius-md)", background: `linear-gradient(135deg, ${team.color}15, ${team.color}35)`, border: `1px solid ${team.color}30`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <Users size={20} style={{ color: team.color }} />
@@ -180,7 +180,7 @@ export default function DashboardInteractive() {
                         <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{team.members.length} contributors</span>
                       </div>
                     </div>
-                    <div style={{ display: "flex", gap: "12px" }}>
+                    <div className="leaderboard-team-stats" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                       <div style={{ background: "rgba(255, 255, 255, 0.02)", border: "1px solid rgba(255, 255, 255, 0.04)", padding: "8px 16px", borderRadius: "var(--radius-md)", textAlign: "center", minWidth: "80px" }}>
                         <div style={{ fontSize: "16px", fontWeight: 900, color: team.color }}>{team.totalScore}</div>
                         <div style={{ fontSize: "9px", fontWeight: 700, color: "var(--text-tertiary)", textTransform: "uppercase" }}>Score</div>
