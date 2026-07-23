@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-23T14:00:14.050Z",
+  "lastUpdated": "2026-07-23T16:00:29.394Z",
   "eventName": "CircuitVerse Mergathon 2025",
   "organization": "CircuitVerse",
   "eventStartDate": "2026-05-22",
@@ -8,7 +8,7 @@
     "totalContributors": 17,
     "totalPrsMerged": 112,
     "totalPrsOpened": 0,
-    "totalIssuesClosed": 1019,
+    "totalIssuesClosed": 1018,
     "totalIssuesOpened": 0,
     "daysElapsed": 10,
     "daysRemaining": 0
@@ -23,10 +23,10 @@
         "Asrani-Aman",
         "aryan7071"
       ],
-      "totalScore": 403,
+      "totalScore": 402,
       "totalPrsMerged": 31,
       "totalPrsOpened": 0,
-      "totalIssuesClosed": 310,
+      "totalIssuesClosed": 309,
       "totalIssuesOpened": 0
     },
     {
@@ -9513,10 +9513,10 @@
       "prsOpened": 0,
       "prsMerged": 4,
       "issuesOpened": 0,
-      "issuesClosed": 19,
-      "issuesPrClosedScore": 19,
+      "issuesClosed": 18,
+      "issuesPrClosedScore": 18,
       "prsMergedScore": 12,
-      "score": 31,
+      "score": 30,
       "activityLevel": "High",
       "dailyActivity": [
         {
@@ -9564,8 +9564,8 @@
           "prsOpened": 0,
           "prsMerged": 0,
           "issuesOpened": 0,
-          "issuesClosed": 18,
-          "score": 18
+          "issuesClosed": 17,
+          "score": 17
         },
         {
           "date": "2026-05-28",
@@ -9685,14 +9685,6 @@
           "type": "issue_closed",
           "title": "🐞 Bug: [Tauri] All HTTP API requests fail silently due to @tauri-apps/plugin-http streaming incompatibility",
           "url": "https://github.com/CircuitVerse/cv-frontend-vue/issues/968",
-          "repo": "CircuitVerse/cv-frontend-vue",
-          "date": "2026-05-27",
-          "points": 1
-        },
-        {
-          "type": "issue_closed",
-          "title": "🐞 Bug: listeners.js throwing transformCallback undefined errors across all platforms",
-          "url": "https://github.com/CircuitVerse/cv-frontend-vue/issues/950",
           "repo": "CircuitVerse/cv-frontend-vue",
           "date": "2026-05-27",
           "points": 1
@@ -10880,8 +10872,8 @@
       "prsOpened": 0,
       "prsMerged": 4,
       "issuesOpened": 0,
-      "issuesClosed": 172,
-      "score": 184
+      "issuesClosed": 171,
+      "score": 183
     },
     {
       "date": "2026-05-28",
